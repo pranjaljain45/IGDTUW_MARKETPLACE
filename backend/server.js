@@ -25,18 +25,18 @@ mongoose.connect(MONGO_URI, {
     .catch(err => console.error("MongoDB User Connection Error:", err));
 
 
-app.get("/", (req, res) => {
-    res.send("Server is running");
-});
-
-
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../frontend/dist")));
-  
+
     app.get("*", (req, res) => {
-      res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+        res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
     });
-  }
+} else {
+    app.get("/", (req, res) => {
+        res.send("Server is running");
+    });
+}
+
 
 // Product Schema
 const productSchema = new mongoose.Schema({
