@@ -1,4 +1,4 @@
-require('dotenv').config({ path: '../.env' }); // Load .env file
+require('dotenv').config({ path: './.env' }); // Load .env file
 
 const express = require('express');
 const app = express();
@@ -36,6 +36,10 @@ if (process.env.NODE_ENV === "production") {
         res.send("Server is running");
     });
 }
+
+
+console.log("Serving static from:", path.join(__dirname, "../frontend/dist"));
+
 
 
 // Product Schema
