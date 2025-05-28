@@ -30,6 +30,14 @@ app.get("/", (req, res) => {
 });
 
 
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "../frontend/dist")));
+  
+    app.get("*", (req, res) => {
+      res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+    });
+  }
+
 // Product Schema
 const productSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -43,7 +51,6 @@ const productSchema = new mongoose.Schema({
 });
 
 const Product = mongoose.model('Products', productSchema);
-
 
 
 
@@ -84,13 +91,6 @@ app.get('/products', async (req, res) => {
 });
 
 
-if (process.env.NODE_ENV == "production") {
-    app.use(express.static(path.join(__dirname, "../frontend/dist")));
-
-    app.get("*", (req, res) =>{
-        res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
-    })
-}
 
 
 //Fetch filtered products
