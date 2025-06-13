@@ -30,7 +30,7 @@ const CompleteProfile = () => {
     };
 
     // submitting the form data
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         await AddUser();
         // setUserDetails({...userDetails, [e.target.name]:e.target.value})
@@ -42,27 +42,69 @@ const CompleteProfile = () => {
         // }
     };
 
+    // const AddUser = async () => {
+    //     console.log(userDetails)
+    //     const response = await fetch("https://marketplace-backend-x2xl.onrender.com/userinfo", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         const formattedData = {
+    //             ...userDetails,
+    //             graduationYear: Number(userDetails.graduationYear), // 👈 convert string to number
+    //         };
+
+    //         body: JSON.stringify(formattedData),
+
+
+    //         // body: JSON.stringify(userDetails),
+    //     });
+    //     const data = await response.json();
+
+    //     if (response.ok) {
+    //         console.log(data.message); // Success message
+    //         alert("Details logged successfully");
+    //     } else {
+    //         console.log("Failed to save profile: " + data.error);
+    //         // alert("sdflkn")
+    //     }
+    //     navigate("/"); // Redirect 
+    // };
+
     const AddUser = async () => {
-        console.log(userDetails)
+        const formattedData = {
+            ...userDetails,
+            graduationYear: Number(userDetails.graduationYear), // convert to number
+        };
+
+        console.log("Sending:", formattedData);
+
         const response = await fetch("https://marketplace-backend-x2xl.onrender.com/userinfo", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(userDetails),
-          });
+            body: JSON.stringify(formattedData),
+        });
+
         const data = await response.json();
 
         if (response.ok) {
-            console.log(data.message); // Success message
+            console.log(data.message);
             alert("Details logged successfully");
-        } else {
-            console.log("Failed to save profile: " + data.error);
-            // alert("sdflkn")
+
+            // Save to localStorage
+            localStorage.setItem("userId", formattedData.userId);
+
+            // Navigate to dashboard
+            navigate("/userdashboard");
         }
-        navigate("/"); // Redirect 
+        else {
+            console.error("Failed to save profile: " + data.error);
+            alert("Failed to save profile. Please check console for details.");
+        }
     };
-    
+
 
     return (
         <div id="complete-profile-container">

@@ -4,6 +4,7 @@ import './App.css';
 import Navbar from "./components/Navbar/Navbar";
 import NewNavbar from "./components/newNavbar/newNavbar";
 import SignUp from "./pages/SignUp/SignUp";
+import SignIn from "./pages/SignIn/SignIn";
 import Faq from "./components/faq/faq";
 import Contact from "./components/Contact/Contact";
 import CompleteProfile from './pages/CompleteProfile/completeProfile';
@@ -11,10 +12,10 @@ import CategoryPage from "./pages/CategoryPage/CategoryPage";
 import ProductDetail from './pages/ProductDetail/ProductDetail';
 import UserDashboard from './pages/UserDashboard/userDashboard';
 import ProductUpload from './pages/ProductUpload/productUpload';
-import { auth } from "./firebaseConfig"; 
-import { onAuthStateChanged } from "firebase/auth"; 
+import { auth } from "./firebaseConfig";
+import { onAuthStateChanged } from "firebase/auth";
 
-import LandingPage from "./pages/LandingPage"; 
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -32,10 +33,11 @@ function App() {
         {isAuthenticated ? <NewNavbar setIsAuthenticated={setIsAuthenticated} /> : <Navbar />}
         <Routes>
           <Route path="/" element={<LandingPage />} />
-         <Route path="/category/:categoryName" element={<CategoryPage />} />
+          <Route path="/category/:categoryName" element={<CategoryPage />} />
           <Route path="/category" element={<CategoryPage />} />
           <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/signup" element={<SignUp setIsAuthenticated={setIsAuthenticated} />} /> 
+          <Route path="/signup" element={<SignUp setIsAuthenticated={setIsAuthenticated} />} />
+          <Route path="/signin" element={<SignIn setIsAuthenticated={setIsAuthenticated} />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/complete-profile" element={<CompleteProfile />} />
